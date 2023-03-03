@@ -94,4 +94,46 @@ employeeIsWorkingPromise().then((message) => {
   console.log('Third Promise catch: ' + message.status + ' ' + message.emoticon);
 });
 
+const task1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Task 1 completed');
+  }, 3000);
+});
+
+const task2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Task 2 completed');
+  }, 2000);
+});
+
+const task3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject('Task 3 not completed');
+  }, 1000);
+});
+
+Promise.all([
+  task1,
+  task2,
+  task3,
+]).then((message) => {
+
+  console.log(message);
+}).catch((message) => {
+  console.log('Error: ' + message);
+});
+
+Promise.race([
+  task1,
+  task2,
+  task3,
+]).then((message) => {
+  
+    console.log(message);
+  }).catch((message) => {
+    console.log(message);
+  }).catch((message) => {
+    console.log('Error: ' + message);
+  });
+
 
