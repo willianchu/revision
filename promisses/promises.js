@@ -28,4 +28,35 @@ second_Promise.then((message) => {
 });
 
 
+const userOnline = false;
+const userUsingMouseJiggler = false;
+
+function employeeIsWorking(callback, errorCallback) {
+  console.log('third promise started');
+  if (userOnline) {
+    if (userUsingMouseJiggler) {
+      errorCallback({
+        status: 'Employee is cheating',
+        emoticon: ':('
+      });
+    } else {
+      callback({
+        status: 'Employee is working',
+        emoticon: ':)'  
+      });
+    }
+  } else {
+    errorCallback({
+      status: 'Employee is not working',
+      emoticon: ':('
+    });
+  }
+}
+
+employeeIsWorking((message) => {
+  console.log(message.status + ' ' + message.emoticon);
+},(error) => {
+  console.log(error.status + ' ' + error.emoticon);
+});
+
 
