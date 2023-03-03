@@ -1,4 +1,5 @@
 let first_Promise = new Promise((resolve, reject) => {
+  console.log('# First promise started');
   setTimeout(() => {
     resolve('First promise resolved');
   }, 2000);
@@ -13,6 +14,7 @@ first_Promise.then((message) => {
 
 
 let second_Promise = new Promise((resolve, reject) => {
+  console.log('# Second promise started');
   let a = 1 + 2;
   if (a == 2) {
     resolve('Second promise resolved');
@@ -27,12 +29,12 @@ second_Promise.then((message) => {
   console.log('Second promise catch: ' + message);
 });
 
-
+// Call back function
 const userOnline = false;
 const userUsingMouseJiggler = false;
 
 function employeeIsWorking(callback, errorCallback) {
-  console.log('third promise started');
+  console.log('# callback function started');
   if (userOnline) {
     if (userUsingMouseJiggler) {
       errorCallback({
@@ -54,9 +56,42 @@ function employeeIsWorking(callback, errorCallback) {
 }
 
 employeeIsWorking((message) => {
-  console.log(message.status + ' ' + message.emoticon);
-},(error) => {
-  console.log(error.status + ' ' + error.emoticon);
+  console.log('Callback then: ' + message.status + ' ' + message.emoticon);
+}, (message) => {
+  console.log('Callback catch: ' + message.status + ' ' + message.emoticon);
+});
+
+
+// Promise version
+
+function employeeIsWorkingPromise() {
+  console.log('# Third Promise started');
+  return new Promise((resolve, reject) => {
+    if (userOnline) {
+      if (userUsingMouseJiggler) {
+        reject({
+          status: 'Employee is cheating',
+          emoticon: ':('
+        });
+      } else {
+        resolve({
+          status: 'Employee is working',
+          emoticon: ':)'  
+        });
+      }
+    } else {
+      reject({
+        status: 'Employee is not working',
+        emoticon: ':('
+      });
+    }
+  });
+}
+
+employeeIsWorkingPromise().then((message) => {
+  console.log('Third Promise then: ' + message.status + ' ' + message.emoticon);
+}).catch((message) => {
+  console.log('Third Promise catch: ' + message.status + ' ' + message.emoticon);
 });
 
 
