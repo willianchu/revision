@@ -36,7 +36,6 @@ function requestTickets(quantity) {
         if (quantity > availableTickets) {
             reject('Tkts Not enough tickets');
         } else {
-            availableTickets -= quantity;
             resolve(quantity);
         }
     });
@@ -64,5 +63,34 @@ requestTickets(5).then(quantity => {
 });
 
 
-// ## buying tickets with async await
+// ## Google request with async await
+
+async function firstAwait() {
+    try {
+        const response = await makeRequest('Google');
+        console.log('Async Location Response Received');
+        const processedResponse = await processRequest(response);
+        console.log('Async Location response: ',processedResponse);
+    } catch (err) {
+        console.log('Async Location error: ',err);
+    }
+}
+
+firstAwait();
+
+// ##Buying tickets with async await
+
+async function secondAwait() {
+    try {
+        const quantity = await requestTickets(5);
+        console.log('Async Tkts Request Received');
+        const processedResponse = await ProcessingRequest(quantity);
+        console.log('Async Tkts response: ',processedResponse);
+    } catch (err) {
+        console.log('Async Tkts error: ',err);
+    }
+}
+
+secondAwait();
+secondAwait();
 
